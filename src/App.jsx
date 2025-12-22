@@ -1,41 +1,68 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Plus, Trash2, Check, Circle } from 'lucide-react';
 
-export default function App() {
-  const [todos, setTodos] = useState([
-    { id: 1, text: 'Learn React basics', completed: false, category: 'Learning' },
-    { id: 2, text: 'Build todo app', completed: false, category: 'Project' },
-  ]);
+export default function TodoApp() {
+  // STATE MANAGEMENT with localStorage
+  // Load todos from localStorage on initial render, or use default todos if none exist
+  const [todos, setTodos] = useState(() => {
+    const savedTodos = localStorage.getItem('todos');
+    if (savedTodos) {
+      return JSON.parse(savedTodos);
+    }
+    return [
+      { id: 1, text: 'Learn React basics', completed: false, category: 'Learning' },
+      { id: 2, text: 'Build todo app', completed: false, category: 'Project' },
+    ];
+  });
   const [newTodoText, setNewTodoText] = useState('');
   const [newTodoCategory, setNewTodoCategory] = useState('Personal');
-  const [filter, setFilter] = useState('all');
+  const [filter, setFilter] = useState('all'); // 'all', 'active', 'completed'
 
+  // useEffect: Runs side effects after render
+  // This saves todos to localStorage whenever the todos array changes
+  useEffect(() => {
+    localStorage.setItem('todos', JSON.stringify(todos));
+  }, [todos]); // Dependency array: only run when 'todos' changes
+
+  // EVENT HANDLERS
+  // These are like callback functions - they run when user interacts with UI
+  
   const addTodo = () => {
     if (newTodoText.trim() === '') return;
+    
+    // Create new todo object with unique ID
     const newTodo = {
-      id: Date.now(),
+      id: Date.now(), // Simple way to generate unique IDs
       text: newTodoText,
       completed: false,
       category: newTodoCategory
     };
-    setTodos([...todos, newTodo]);
-    setNewTodoText('');
+    
+    // IMPORTANT: In React, you never mutate state directly
+    // Instead, create a new array with the new item
+    setTodos([...todos, newTodo]); // Spread operator: copies all existing todos
+    setNewTodoText(''); // Clear input field
   };
 
   const toggleTodo = (id) => {
+    // Map creates a new array by transforming each element
+    // If the todo matches our ID, flip its completed status
     setTodos(todos.map(todo => 
       todo.id === id ? { ...todo, completed: !todo.completed } : todo
     ));
   };
 
   const deleteTodo = (id) => {
+    // Filter creates a new array with only items that pass the test
     setTodos(todos.filter(todo => todo.id !== id));
   };
 
+  // COMPUTED VALUES
+  // Derive data from state (like computed properties)
   const filteredTodos = todos.filter(todo => {
     if (filter === 'active') return !todo.completed;
     if (filter === 'completed') return todo.completed;
-    return true;
+    return true; // 'all'
   });
 
   const categories = [...new Set(todos.map(todo => todo.category))];
@@ -45,11 +72,14 @@ export default function App() {
     completed: todos.filter(t => t.completed).length
   };
 
+  // JSX - Looks like HTML but it's JavaScript
+  // Curly braces {} let you embed JavaScript expressions
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8">
       <div className="max-w-4xl mx-auto">
+        {/* Header */}
         <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">My Tasks</h1>
+          <h1 className="text-3xl font-bold text-gray-800 mb-2">To Do</h1>
           <div className="flex gap-4 text-sm text-gray-600">
             <span>{stats.total} total</span>
             <span>{stats.active} active</span>
@@ -57,9 +87,11 @@ export default function App() {
           </div>
         </div>
 
+        {/* Add Todo Section */}
         <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
           <h2 className="text-lg font-semibold text-gray-700 mb-4">Add New Task</h2>
           <div className="flex gap-3">
+            {/* INPUT: value links to state, onChange updates state */}
             <input
               type="text"
               value={newTodoText}
@@ -74,9 +106,10 @@ export default function App() {
               className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option>Personal</option>
-              <option>Work</option>
-              <option>Learning</option>
-              <option>Project</option>
+              <option>School</option>
+              <option>TA</option>
+              <option>Recruiting</option>
+              <option>Other</option>
             </select>
             <button
               onClick={addTodo}
@@ -88,6 +121,7 @@ export default function App() {
           </div>
         </div>
 
+        {/* Filter Tabs */}
         <div className="bg-white rounded-lg shadow-lg p-4 mb-6">
           <div className="flex gap-2">
             {['all', 'active', 'completed'].map(filterType => (
@@ -106,17 +140,21 @@ export default function App() {
           </div>
         </div>
 
+        {/* Todo List */}
         <div className="space-y-3">
           {filteredTodos.length === 0 ? (
             <div className="bg-white rounded-lg shadow-lg p-8 text-center text-gray-500">
               No tasks to show. Add one above!
             </div>
           ) : (
+            // MAP: Iterate over array and return JSX for each item
+            // KEY: React needs unique keys to efficiently update lists
             filteredTodos.map(todo => (
               <div
                 key={todo.id}
                 className="bg-white rounded-lg shadow-lg p-4 flex items-center gap-4 hover:shadow-xl transition-shadow"
               >
+                {/* Toggle completion button */}
                 <button
                   onClick={() => toggleTodo(todo.id)}
                   className="flex-shrink-0"
@@ -128,6 +166,7 @@ export default function App() {
                   )}
                 </button>
 
+                {/* Todo text with conditional styling */}
                 <div className="flex-1">
                   <p className={`text-lg ${
                     todo.completed ? 'line-through text-gray-400' : 'text-gray-800'
@@ -137,6 +176,7 @@ export default function App() {
                   <span className="text-sm text-gray-500">{todo.category}</span>
                 </div>
 
+                {/* Delete button */}
                 <button
                   onClick={() => deleteTodo(todo.id)}
                   className="flex-shrink-0 text-red-500 hover:text-red-700 transition-colors"
@@ -148,6 +188,7 @@ export default function App() {
           )}
         </div>
 
+        {/* Category Summary */}
         {categories.length > 0 && (
           <div className="mt-6 bg-white rounded-lg shadow-lg p-6">
             <h3 className="text-lg font-semibold text-gray-700 mb-3">By Category</h3>
