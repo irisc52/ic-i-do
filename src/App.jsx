@@ -15,7 +15,7 @@ export default function TodoApp() {
   });
   const [newTodoText, setNewTodoText] = useState('');
   const [newTodoCategory, setNewTodoCategory] = useState('personal🧘🏻‍♀️');
-  const [filter, setFilter] = useState('all'); // 'all', 'active', 'completed'
+  const [filter, setFilter] = useState('all'); // 'all', 'active', 'completed', 'pinned (active)'
 
   const [editingId, setEditingId] = useState(null);
   const [editingText, setEditingText] = useState('');
@@ -80,6 +80,12 @@ export default function TodoApp() {
     if (filter === 'completed') return todo.completed;
     return true; // 'all'
   });
+
+  const sortedFilteredTodos = [...filteredTodos].sort((a, b) => {
+    if (!a.pinned) return 1;
+    if (!b.pinned) return -1;
+    return 0;
+  })
 
   const categories = [...new Set(todos.map(todo => todo.category))];
   const stats = {
@@ -171,7 +177,7 @@ export default function TodoApp() {
           ) : (
             // MAP: Iterate over array and return JSX for each item
             // KEY: React needs unique keys to efficiently update lists
-            filteredTodos.map(todo => (
+            sortedFilteredTodos.map(todo => (
               <div
                 key={todo.id}
                 className="bg-white rounded-lg shadow-lg p-4 flex items-center gap-4 hover:shadow-xl transition-shadow"
@@ -217,7 +223,7 @@ export default function TodoApp() {
                         setEditingText(todo.text);
                       }}
                     >
-                      {todo.text} {todo.dueDate &&
+                      {todo.text} {todo.dueDate && !todo.completed && 
                                   (<span className = "text-xs text-gray-500">
                                     {new Date(todo.dueDate).toLocaleDateString()}
                                   </span>)}
