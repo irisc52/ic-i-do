@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Trash2, Check, Circle } from 'lucide-react';
+import { Plus, Trash2, Check, Circle, PinIcon, PinOffIcon, PianoIcon } from 'lucide-react';
 
 export default function TodoApp() {
   // STATE MANAGEMENT with localStorage
@@ -10,46 +10,47 @@ export default function TodoApp() {
       return JSON.parse(savedTodos);
     }
     return [
-      { id: 1, text: 'Learn React basics', completed: false, category: 'Learning' },
-      { id: 2, text: 'Build todo app', completed: false, category: 'Project' },
+      { id: 1, text: 'Test', completed: false, category: 'personal' },
     ];
   });
   const [newTodoText, setNewTodoText] = useState('');
-  const [newTodoCategory, setNewTodoCategory] = useState('Personal');
+  const [newTodoCategory, setNewTodoCategory] = useState('personal🧘🏻‍♀️');
   const [filter, setFilter] = useState('all'); // 'all', 'active', 'completed'
 
   const [editingId, setEditingId] = useState(null);
   const [editingText, setEditingText] = useState('');
 
+  const [newToDoDate, setNewToDoDueDate] = useState('');
+
   // useEffect: Runs side effects after render
-  // This saves todos to localStorage whenever the todos array changes
+  // Saves todos to localStorage whenever the todos array changes
   useEffect(() => {
     localStorage.setItem('todos', JSON.stringify(todos));
   }, [todos]); // Dependency array: only run when 'todos' changes
 
   // EVENT HANDLERS
-  // These are like callback functions - they run when user interacts with UI
+  // Run when user interacts with UI
   
   const addTodo = () => {
     if (newTodoText.trim() === '') return;
     
     // Create new todo object with unique ID
     const newTodo = {
-      id: Date.now(), // Simple way to generate unique IDs
+      id: Date.now(),
       text: newTodoText,
       completed: false,
       isEditing: false,
-      category: newTodoCategory
+      category: newTodoCategory,
+      pinned: false,
+      ...(newToDoDate && {dueDate: newToDoDate})
     };
     
-    // IMPORTANT: In React, you never mutate state directly
-    // Instead, create a new array with the new item
     setTodos([...todos, newTodo]); // Spread operator: copies all existing todos
     setNewTodoText(''); // Clear input field
+    setNewToDoDueDate('');
   };
 
   const toggleTodo = (id) => {
-    // Map creates a new array by transforming each element
     // If the todo matches our ID, flip its completed status
     setTodos(todos.map(todo => 
       todo.id === id ? { ...todo, completed: !todo.completed } : todo
@@ -57,13 +58,18 @@ export default function TodoApp() {
   };
 
   const deleteTodo = (id) => {
-    // Filter creates a new array with only items that pass the test
     setTodos(todos.filter(todo => todo.id !== id));
   };
 
   const editToDo = (id, newText) => {
     setTodos(todos.map(todo =>
       todo.id === id ? {...todo, text: newText} : todo
+    ));
+  }
+
+  const togglePin = (id) => {
+    setTodos(todos.map(todo =>
+      todo.id === id ? {...todo, pinned: !todo.pinned} : todo
     ));
   }
 
@@ -82,14 +88,13 @@ export default function TodoApp() {
     completed: todos.filter(t => t.completed).length
   };
 
-  // JSX - Looks like HTML but it's JavaScript
-  // Curly braces {} let you embed JavaScript expressions
+  // JSX
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">To Do</h1>
+          <h1 className="text-3xl font-bold text-gray-800 mb-2">ic 👀 i do ✅</h1>
           <div className="flex gap-4 text-sm text-gray-600">
             <span>{stats.total} total</span>
             <span>{stats.active} active</span>
@@ -99,7 +104,7 @@ export default function TodoApp() {
 
         {/* Add Todo Section */}
         <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <h2 className="text-lg font-semibold text-gray-700 mb-4">Add New Task</h2>
+          <h2 className="text-lg font-semibold text-gray-700 mb-4">add new task</h2>
           <div className="flex gap-3">
             {/* INPUT: value links to state, onChange updates state */}
             <input
@@ -107,26 +112,33 @@ export default function TodoApp() {
               value={newTodoText}
               onChange={(e) => setNewTodoText(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && addTodo()}
-              placeholder="What needs to be done?"
+              placeholder="here!"
               className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
+            <input
+              type="date"
+              value={newToDoDate}
+              onChange={(e) => setNewToDoDueDate(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && addTodo()}
+              className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
             <select
               value={newTodoCategory}
               onChange={(e) => setNewTodoCategory(e.target.value)}
               className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              <option>Personal</option>
-              <option>School</option>
-              <option>TA</option>
-              <option>Recruiting</option>
-              <option>Other</option>
+              <option>personal🧘🏻‍♀️</option>
+              <option>school📚</option>
+              <option>112👩🏻‍🏫</option>
+              <option>j*b💻</option>
+              <option>other🤷🏻‍♀️</option>
             </select>
             <button
               onClick={addTodo}
               className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
             >
               <Plus size={20} />
-              Add
+              add
             </button>
           </div>
         </div>
@@ -138,7 +150,7 @@ export default function TodoApp() {
               <button
                 key={filterType}
                 onClick={() => setFilter(filterType)}
-                className={`px-4 py-2 rounded-lg capitalize transition-colors ${
+                className={`px-4 py-2 rounded-lg transition-colors ${
                   filter === filterType
                     ? 'bg-blue-600 text-white'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -154,7 +166,7 @@ export default function TodoApp() {
         <div className="space-y-3">
           {filteredTodos.length === 0 ? (
             <div className="bg-white rounded-lg shadow-lg p-8 text-center text-gray-500">
-              No tasks to show. Add one above!
+              lock in bruh
             </div>
           ) : (
             // MAP: Iterate over array and return JSX for each item
@@ -205,16 +217,32 @@ export default function TodoApp() {
                         setEditingText(todo.text);
                       }}
                     >
-                      {todo.text}
+                      {todo.text} {todo.dueDate &&
+                                  (<span className = "text-xs text-gray-500">
+                                    {new Date(todo.dueDate).toLocaleDateString()}
+                                  </span>)}
                     </p>
                   )}
                   <span className="text-sm text-gray-500">{todo.category}</span>
                 </div>
 
+                {/* Pin button*/} 
+                <button
+                  onClick={() => togglePin(todo.id)}
+                  className="flex-shrink-0"
+                >
+                  { todo.pinned ? (
+                      <PinIcon className="text-red-500" size={20} fill="currentColor"/> 
+                    ) : (
+                      <PinIcon className="text-black hover:text-red-500 transition-colors" size={20}/>)
+                  }
+                </button>
+
+
                 {/* Delete button */}
                 <button
                   onClick={() => deleteTodo(todo.id)}
-                  className="flex-shrink-0 text-red-500 hover:text-red-700 transition-colors"
+                  className="flex-shrink-0 text-black hover:text-red-500 transition-colors"
                 >
                   <Trash2 size={20} />
                 </button>
