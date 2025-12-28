@@ -18,6 +18,9 @@ export default function TodoApp() {
   const [newTodoCategory, setNewTodoCategory] = useState('Personal');
   const [filter, setFilter] = useState('all'); // 'all', 'active', 'completed'
 
+  const [editingId, setEditingId] = useState(null);
+  const [editingText, setEditingText] = useState('');
+
   // useEffect: Runs side effects after render
   // This saves todos to localStorage whenever the todos array changes
   useEffect(() => {
@@ -35,6 +38,7 @@ export default function TodoApp() {
       id: Date.now(), // Simple way to generate unique IDs
       text: newTodoText,
       completed: false,
+      isEditing: false,
       category: newTodoCategory
     };
     
@@ -56,6 +60,12 @@ export default function TodoApp() {
     // Filter creates a new array with only items that pass the test
     setTodos(todos.filter(todo => todo.id !== id));
   };
+
+  const editToDo = (id, newText) => {
+    setTodos(todos.map(todo =>
+      todo.id === id ? {...todo, text: newText} : todo
+    ));
+  }
 
   // COMPUTED VALUES
   // Derive data from state (like computed properties)
@@ -168,11 +178,36 @@ export default function TodoApp() {
 
                 {/* Todo text with conditional styling */}
                 <div className="flex-1">
-                  <p className={`text-lg ${
-                    todo.completed ? 'line-through text-gray-400' : 'text-gray-800'
-                  }`}>
-                    {todo.text}
-                  </p>
+                  {editingId === todo.id ? (
+                    <input
+                      value={editingText}
+                      onChange={(e) => setEditingText(e.target.value)}
+                      onKeyPress={(e) => {
+                        if (e.key === 'Enter') {
+                          editToDo(todo.id, editingText);
+                          setEditingId(null);
+                        }
+                      }}
+                      onBlur={() => {
+                        editToDo(todo.id, editingText);
+                        setEditingId(null);
+                      }}
+                      className="text-lg border-b-2 border-blue-500 focus:outline-none"
+                      autoFocus
+                      />
+                  ) : (
+                    <p
+                      className={`text-lg cursor-pointer ${
+                        todo.completed ? 'line-through text-gray-400' : 'text-gray-800'
+                      }`}
+                      onClick = {() => {
+                        setEditingId(todo.id);
+                        setEditingText(todo.text);
+                      }}
+                    >
+                      {todo.text}
+                    </p>
+                  )}
                   <span className="text-sm text-gray-500">{todo.category}</span>
                 </div>
 
