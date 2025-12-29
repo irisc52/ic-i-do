@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Trash2, Check, Circle, PinIcon, PinOffIcon, PianoIcon } from 'lucide-react';
+import { Plus, Trash2, Check, Circle, PinIcon } from 'lucide-react';
 
 export default function TodoApp() {
   // STATE MANAGEMENT with localStorage
@@ -15,7 +15,7 @@ export default function TodoApp() {
   });
   const [newTodoText, setNewTodoText] = useState('');
   const [newTodoCategory, setNewTodoCategory] = useState('personal🧘🏻‍♀️');
-  const [filter, setFilter] = useState('all'); // 'all', 'active', 'completed', 'pinned (active)'
+  const [filter, setFilter] = useState('active'); // 'all', 'active', 'completed', 'pinned (active)'
 
   const [editingId, setEditingId] = useState(null);
   const [editingText, setEditingText] = useState('');
@@ -39,6 +39,7 @@ export default function TodoApp() {
       id: Date.now(),
       text: newTodoText,
       completed: false,
+      completedDate: null,
       isEditing: false,
       category: newTodoCategory,
       pinned: false,
@@ -52,9 +53,17 @@ export default function TodoApp() {
 
   const toggleTodo = (id) => {
     // If the todo matches our ID, flip its completed status
-    setTodos(todos.map(todo => 
-      todo.id === id ? { ...todo, completed: !todo.completed } : todo
-    ));
+    setTodos(todos.map(todo => {
+      if (todo.id === id) {
+        const newCompleted = !todo.completed;
+        return {
+          ...todo,
+          completed: newCompleted,
+          completedDate: newCompleted ? new Date().toLocaleDateString() : null
+        };
+      }
+      return todo;
+    }));
   };
 
   const deleteTodo = (id) => {
@@ -152,7 +161,7 @@ export default function TodoApp() {
         {/* Filter Tabs */}
         <div className="bg-white rounded-lg shadow-lg p-4 mb-6">
           <div className="flex gap-2">
-            {['all', 'active', 'completed'].map(filterType => (
+            {['active', 'all', 'completed'].map(filterType => (
               <button
                 key={filterType}
                 onClick={() => setFilter(filterType)}
@@ -226,7 +235,13 @@ export default function TodoApp() {
                       {todo.text} {todo.dueDate && !todo.completed && 
                                   (<span className = "text-xs text-gray-500">
                                     {new Date(todo.dueDate).toLocaleDateString()}
-                                  </span>)}
+                                  </span>)} 
+                                  {todo.completed && todo.completedDate && 
+                                  (<span className = "text-xs text-gray-500">
+                                    completed on {todo.completedDate}
+                                  </span>
+                                  )
+                                            }
                     </p>
                   )}
                   <span className="text-sm text-gray-500">{todo.category}</span>
@@ -260,7 +275,7 @@ export default function TodoApp() {
         {/* Category Summary */}
         {categories.length > 0 && (
           <div className="mt-6 bg-white rounded-lg shadow-lg p-6">
-            <h3 className="text-lg font-semibold text-gray-700 mb-3">By Category</h3>
+            <h3 className="text-lg font-semibold text-gray-700 mb-3">by category (active)</h3>
             <div className="flex flex-wrap gap-3">
               {categories.map(category => {
                 const count = todos.filter(t => t.category === category && !t.completed).length;
