@@ -225,7 +225,7 @@ export default function TodoApp() {
                   ) : (
                     <p
                       className={`text-lg cursor-pointer ${
-                        todo.completed ? 'line-through text-gray-400' : 'text-gray-800'
+                        todo.completed ? 'text-gray-400' : 'text-gray-800'
                       }`}
                       onClick = {() => {
                         setEditingId(todo.id);
@@ -234,11 +234,11 @@ export default function TodoApp() {
                     >
                       {todo.text} {todo.dueDate && !todo.completed && 
                                   (<span className = "text-xs text-gray-500">
-                                    {new Date(todo.dueDate).toLocaleDateString()}
+                                    due {new Date(todo.dueDate).toLocaleDateString()}
                                   </span>)} 
                                   {todo.completed && todo.completedDate && 
                                   (<span className = "text-xs text-gray-500">
-                                    completed on {todo.completedDate}
+                                    completed {todo.completedDate}
                                   </span>
                                   )
                                             }
