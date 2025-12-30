@@ -6,14 +6,14 @@ Features:
 - Adding, editing, completing, and deleting to-do list items
 - Detailing items with category (school, work, etc) and due date (optional)
 - Pinning and unpinning items based on priority
+- Home screen / welcome page with light and dark mode
 
 To Do: (😉)
-- Welcome screen + separate page for small, temporary notes such as daily schedule / notes
+- Separate page for small, temporary notes such as daily schedule / notes
 - Text formatting (bold, italic, etc)
 - Subtasks / nested to-do items
 - Animation when completing an item
 - Stats page (# completed, etc) like the GitHub contributions or Leetcode progress page
-- Dark Mode / different themes
 - Auto-pin for soon-to-be due or overdue items
 - Polish, make actual URL instead of localhost
 
