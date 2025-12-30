@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { MoonIcon, SunIcon } from 'lucide-react';
+import { Typewriter } from 'react-simple-typewriter';
 
 const themes = {
     light: {
@@ -25,10 +26,21 @@ const themes = {
     // pink: {}
 }
 
+const moods = {
+    normal: {
+        message: ["welcome!"]
+    },
+    iris: {
+        message: ["can't cry about having a lot on my plate if my goal is to EAT"]
+    },
+
+}
+
 export default function Welcome() {
 
     const [currentPage, setCurrentPage] = useState('')
     const [theme, setTheme] = useState('light')
+    const [mood, setMood] = useState('iris')
 
     const toggleTheme = (theme) => {
         theme === 'light' ?
@@ -36,6 +48,7 @@ export default function Welcome() {
     }
 
     const t = themes[theme];
+    const m = moods[mood];
 
     return (
     <div className={`min-h-screen ${t.bg } p-8 flex items-center justify-center`}>
@@ -49,7 +62,7 @@ export default function Welcome() {
             </button>
 
             <h1 className={`text-5xl font-serif font-bold ${t.text} mb-4`}>
-                can't cry about having a lot on your plate if your goal is to EAT
+                <Typewriter words={m.message} loop={1}/> 
             </h1>
 
             <div className="flex gap-4 justify-center">
