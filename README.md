@@ -7,9 +7,9 @@ Features:
 - Detailing items with category (school, work, etc) and due date (optional)
 - Pinning and unpinning items based on priority
 - Home screen / welcome page with light and dark mode
+- Notes page 
 
 To Do: (😉)
-- Separate page for small, temporary notes such as daily schedule / notes
 - Text formatting (bold, italic, etc)
 - Subtasks / nested to-do items
 - Animation when completing an item
