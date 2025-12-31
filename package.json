@@ -12,8 +12,10 @@
   "dependencies": {
     "lucide-react": "^0.562.0",
     "react": "^19.2.0",
+    "react-confetti": "^6.4.0",
     "react-dom": "^19.2.0",
     "react-inline-editing": "^1.0.10",
+    "react-rewards": "^2.1.0",
     "react-simple-typewriter": "^5.0.1"
   },
   "devDependencies": {

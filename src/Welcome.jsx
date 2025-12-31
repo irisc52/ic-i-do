@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MoonIcon, SunIcon } from 'lucide-react';
+import { MoonIcon, SunIcon, NotebookTextIcon, PencilIcon, CircleQuestionMark} from 'lucide-react';
 import { Typewriter } from 'react-simple-typewriter';
 
 const themes = {
@@ -23,7 +23,6 @@ const themes = {
         buttonCurrent: "bg-blue-200",
         buttonCurrentText: "text-black"
     }
-    // pink: {}
 }
 
 const moods = {
@@ -36,9 +35,9 @@ const moods = {
 
 }
 
-export default function Welcome() {
+export default function Welcome({ goToPage }) {
 
-    const [currentPage, setCurrentPage] = useState('')
+    const [selectedPage, setSelectedPage] = useState('')
     const [theme, setTheme] = useState('light')
     const [mood, setMood] = useState('iris')
 
@@ -49,6 +48,18 @@ export default function Welcome() {
 
     const t = themes[theme];
     const m = moods[mood];
+
+    const pages = [
+        {   name: 'app',
+            icon: <NotebookTextIcon/>
+        },
+        {   name: 'notes',
+            icon: <PencilIcon/>
+        },
+        {   name: 'about',
+            icon: <CircleQuestionMark/>
+        }
+    ]
 
     return (
     <div className={`min-h-screen ${t.bg } p-8 flex items-center justify-center`}>
@@ -62,23 +73,25 @@ export default function Welcome() {
             </button>
 
             <h1 className={`text-5xl font-serif font-bold ${t.text} mb-4`}>
-                <Typewriter words={m.message} loop={1}/> 
+                <Typewriter words={m.message} loop={1} typeSpeed={60}/> 
             </h1>
 
             <div className="flex gap-4 justify-center">
-            {['ic, i do', 'notes & stuff', 'about'].map(page => (
+            {/* {[<NotebookTextIcon/>, <PencilIcon/>, <CircleQuestionMark/>].map(page => ( */}
+            {pages.map(page => (
                 <button
                     key={page}
-                    onClick={() => setCurrentPage(page)}
+                    // onClick = {() => page.name === selectedPage ? setSelectedPage('') : setSelectedPage(page.name)}
+                    onClick={() => goToPage(page.name)}
                     className={`px-4 py-2 rounded-lg transition-colors ${
-                        currentPage === page
+                        selectedPage === page.name
                         ? t.buttonCurrent + ' ' + t.buttonCurrentText + ' font-serif'
                         : t.button + ' ' + t.buttonText + ' hover:' + t.buttonHover + ' font-serif'
                         // 'bg-blue-500 text-white font-serif'
                         // : 'bg-gray-200 text-gray-700 hover:bg-gray-300 font-serif'
                     }`}
                 >
-                    {page}
+                    {page.icon}
                 </button>
             ))}
             </div>

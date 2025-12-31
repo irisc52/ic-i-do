@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Trash2, Check, Circle, PinIcon } from 'lucide-react';
+import { Plus, Trash2, Check, Circle, PinIcon, HomeIcon } from 'lucide-react';
+import { useReward } from 'react-rewards';
 
-export default function TodoApp() {
+
+export default function TodoApp( {goToPage} ) {
   // STATE MANAGEMENT with localStorage
   // Load todos from localStorage on initial render, or use default todos if none exist
   const [todos, setTodos] = useState(() => {
@@ -59,7 +61,7 @@ export default function TodoApp() {
         return {
           ...todo,
           completed: newCompleted,
-          completedDate: newCompleted ? new Date().toLocaleDateString() : null
+          completedDate: newCompleted ? new Date().toISOString().slice(0, 10) : null
         };
       }
       return todo;
@@ -105,7 +107,12 @@ export default function TodoApp() {
 
   // JSX
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8">
+    <div className="min-h-screen font-serif bg-gradient-to-br from-blue-50 to-indigo-100 p-8">
+      <button
+        onClick={() => goToPage('welcome')}
+      >
+          <HomeIcon/>
+      </button>
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
@@ -119,7 +126,7 @@ export default function TodoApp() {
 
         {/* Add Todo Section */}
         <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <h2 className="text-lg font-semibold text-gray-700 mb-4">add new task</h2>
+          <h2 className="text-lg font-semibold font-serif text-gray-700 mb-4">add new task</h2>
           <div className="flex gap-3">
             {/* INPUT: value links to state, onChange updates state */}
             <input
@@ -199,7 +206,7 @@ export default function TodoApp() {
                   {todo.completed ? (
                     <Check className="text-green-600" size={24} />
                   ) : (
-                    <Circle className="text-gray-400" size={24} />
+                    <Circle className="text-gray-400 hover:scale-90" size={24} />
                   )}
                 </button>
 
@@ -234,7 +241,7 @@ export default function TodoApp() {
                     >
                       {todo.text} {todo.dueDate && !todo.completed && 
                                   (<span className = "text-xs text-gray-500">
-                                    due {new Date(todo.dueDate).toLocaleDateString()}
+                                    due {todo.dueDate}
                                   </span>)} 
                                   {todo.completed && todo.completedDate && 
                                   (<span className = "text-xs text-gray-500">
