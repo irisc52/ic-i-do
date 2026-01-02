@@ -6,8 +6,9 @@ Features:
 - Adding, editing, completing, and deleting to-do list items
 - Detailing items with category (school, work, etc) and due date (optional)
 - Pinning and unpinning items based on priority
-- Home screen / welcome page with light and dark mode
-- Notes page 
+- Home screen / welcome page 
+- Notes page
+- Light + Dark mode
 
 To Do: (😉)
 - Text formatting (bold, italic, etc)
