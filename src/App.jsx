@@ -1,9 +1,45 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Trash2, Check, Circle, PinIcon, HomeIcon } from 'lucide-react';
+import { Plus, Trash2, Check, Circle, PinIcon, HomeIcon, SunIcon, MoonIcon } from 'lucide-react';
 import { useReward } from 'react-rewards';
 
 
-export default function TodoApp( {goToPage} ) {
+export default function TodoApp( {goToPage , theme , setTheme } ) {
+
+  const themes = {
+    light: {
+        bg: "bg-blue-50",
+        iconColor: "black",
+        text: "text-gray-800",
+        button: "bg-gray-200",
+        buttonText: "text-gray-700",
+        buttonHover: "bg-gray-300",
+        buttonCurrent: "bg-blue-500",
+        buttonCurrentText: "text-white",
+
+        blockColor: "bg-white",
+
+        textArea: "white",
+        textAreaOutline: "border-gray-300"
+    },
+    dark: {
+        bg: "bg-gray-800",
+        iconColor: "white",
+        text: "text-blue-50",
+        button: "bg-blue-800",
+        buttonText: "text-white",
+        buttonHover: "bg-blue-400",
+        buttonCurrent: "bg-blue-200",
+        buttonCurrentText: "text-black",
+
+        blockColor: "bg-gray-500",
+        
+        textArea: "bg-gray-600",
+        textAreaOutline: "border-gray-700"
+    }
+}
+
+  const t = themes[theme];
+
   // STATE MANAGEMENT with localStorage
   // Load todos from localStorage on initial render, or use default todos if none exist
   const [todos, setTodos] = useState(() => {
@@ -107,17 +143,26 @@ export default function TodoApp( {goToPage} ) {
 
   // JSX
   return (
-    <div className="min-h-screen font-serif bg-gradient-to-br from-blue-50 to-indigo-100 p-8">
-      <button
-        onClick={() => goToPage('welcome')}
-      >
-          <HomeIcon/>
-      </button>
+    <div className={`min-h-screen font-serif  ${t.bg} p-8`}>
+      <div className="flex gap-4">
+        <button
+          onClick={() => goToPage('welcome')}
+        >
+            <HomeIcon color={t.iconColor}/>
+        </button>
+        <button
+          onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+        >
+          {theme === 'light' ? (<MoonIcon color={t.iconColor}/>) :
+                               (<SunIcon color={t.iconColor}/>) }
+        </button>
+      </div>
+      <br></br>
       <div className="max-w-4xl mx-auto">
         {/* Header */}
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">ic 👀 i do ✅</h1>
-          <div className="flex gap-4 text-sm text-gray-600">
+        <div className={`${t.blockColor} rounded-lg shadow-lg p-6 mb-6`}>
+          <h1 className={`text-3xl font-bold ${t.text} mb-2`}>ic 👀 i do ✅</h1>
+          <div className={`flex gap-4 text-sm ${t.text}`}>
             <span>{stats.total} total</span>
             <span>{stats.active} active</span>
             <span>{stats.completed} completed</span>
@@ -125,8 +170,8 @@ export default function TodoApp( {goToPage} ) {
         </div>
 
         {/* Add Todo Section */}
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-          <h2 className="text-lg font-semibold font-serif text-gray-700 mb-4">add new task</h2>
+        <div className={`${t.blockColor} rounded-lg shadow-lg p-6 mb-6`}>
+          <h2 className={`text-lg font-semibold ${t.text} mb-4`}>add new task</h2>
           <div className="flex gap-3">
             {/* INPUT: value links to state, onChange updates state */}
             <input
@@ -135,19 +180,19 @@ export default function TodoApp( {goToPage} ) {
               onChange={(e) => setNewTodoText(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && addTodo()}
               placeholder="here!"
-              className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300"
             />
             <input
               type="date"
               value={newToDoDate}
               onChange={(e) => setNewToDoDueDate(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && addTodo()}
-              className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300"
               />
             <select
               value={newTodoCategory}
               onChange={(e) => setNewTodoCategory(e.target.value)}
-              className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300"
             >
               <option>personal🧘🏻‍♀️</option>
               <option>school📚</option>
@@ -166,7 +211,7 @@ export default function TodoApp( {goToPage} ) {
         </div>
 
         {/* Filter Tabs */}
-        <div className="bg-white rounded-lg shadow-lg p-4 mb-6">
+        <div className={`${t.blockColor} rounded-lg shadow-lg p-4 mb-6`}>
           <div className="flex gap-2">
             {['active', 'all', 'completed'].map(filterType => (
               <button
@@ -187,7 +232,7 @@ export default function TodoApp( {goToPage} ) {
         {/* Todo List */}
         <div className="space-y-3">
           {filteredTodos.length === 0 ? (
-            <div className="bg-white rounded-lg shadow-lg p-8 text-center text-gray-500">
+            <div className={`${t.blockColor} rounded-lg shadow-lg p-8 text-center text-gray-500`}>
               lock in bruh
             </div>
           ) : (
@@ -196,7 +241,7 @@ export default function TodoApp( {goToPage} ) {
             sortedFilteredTodos.map(todo => (
               <div
                 key={todo.id}
-                className="bg-white rounded-lg shadow-lg p-4 flex items-center gap-4 hover:shadow-xl transition-shadow"
+                className={`${t.blockColor} rounded-lg shadow-lg p-4 flex items-center gap-4 hover:shadow-xl transition-shadow`}
               >
                 {/* Toggle completion button */}
                 <button
@@ -232,7 +277,7 @@ export default function TodoApp( {goToPage} ) {
                   ) : (
                     <p
                       className={`text-lg cursor-pointer ${
-                        todo.completed ? 'text-gray-400' : 'text-gray-800'
+                        todo.completed ? 'text-gray-400' : t.text
                       }`}
                       onClick = {() => {
                         setEditingId(todo.id);
@@ -240,18 +285,18 @@ export default function TodoApp( {goToPage} ) {
                       }}
                     >
                       {todo.text} {todo.dueDate && !todo.completed && 
-                                  (<span className = "text-xs text-gray-500">
+                                  (<span className = {`text-xs ${t.text}`}>
                                     due {todo.dueDate}
                                   </span>)} 
                                   {todo.completed && todo.completedDate && 
-                                  (<span className = "text-xs text-gray-500">
+                                  (<span className = {`text-xs text-gray-400`}>
                                     completed {todo.completedDate}
                                   </span>
                                   )
                                             }
                     </p>
                   )}
-                  <span className="text-sm text-gray-500">{todo.category}</span>
+                  <span className={`text-sm ${t.text}`}>{todo.category}</span>
                 </div>
 
                 {/* Pin button*/} 
@@ -260,9 +305,9 @@ export default function TodoApp( {goToPage} ) {
                   className="flex-shrink-0"
                 >
                   { todo.pinned ? (
-                      <PinIcon className="text-red-500" size={20} fill="currentColor"/> 
+                      <PinIcon className="text-red-400" size={20} fill="currentColor"/> 
                     ) : (
-                      <PinIcon className="text-black hover:text-red-500 transition-colors" size={20}/>)
+                      <PinIcon className={`text-${t.iconColor} hover:text-red-400 transition-colors`} size={20}/>)
                   }
                 </button>
 
@@ -272,7 +317,7 @@ export default function TodoApp( {goToPage} ) {
                   onClick={() => deleteTodo(todo.id)}
                   className="flex-shrink-0 text-black hover:text-red-500 transition-colors"
                 >
-                  <Trash2 size={20} />
+                  <Trash2 size={20} color={t.iconColor}/>
                 </button>
               </div>
             ))
@@ -281,8 +326,8 @@ export default function TodoApp( {goToPage} ) {
 
         {/* Category Summary */}
         {categories.length > 0 && (
-          <div className="mt-6 bg-white rounded-lg shadow-lg p-6">
-            <h3 className="text-lg font-semibold text-gray-700 mb-3">by category (active)</h3>
+          <div className={`mt-6 ${t.blockColor} rounded-lg shadow-lg p-6`}>
+            <h3 className={`text-lg font-semibold ${t.text} mb-3`}>by category (active)</h3>
             <div className="flex flex-wrap gap-3">
               {categories.map(category => {
                 const count = todos.filter(t => t.category === category && !t.completed).length;
