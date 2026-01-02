@@ -9,11 +9,11 @@ Features:
 - Home screen / welcome page 
 - Notes page
 - Light + Dark mode
+- Confetti!
 
 To Do: (😉)
 - Text formatting (bold, italic, etc)
 - Subtasks / nested to-do items
-- Animation when completing an item
 - Stats page (# completed, etc) like the GitHub contributions or Leetcode progress page
 - Auto-pin for soon-to-be due or overdue items
 - Polish, make actual URL instead of localhost
