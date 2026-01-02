@@ -60,6 +60,8 @@ export default function TodoApp( {goToPage , theme , setTheme } ) {
 
   const [newToDoDate, setNewToDoDueDate] = useState('');
 
+  const {reward, isAnimating} = useReward('rewardId', 'confetti')
+
   // useEffect: Runs side effects after render
   // Saves todos to localStorage whenever the todos array changes
   useEffect(() => {
@@ -245,14 +247,19 @@ export default function TodoApp( {goToPage , theme , setTheme } ) {
               >
                 {/* Toggle completion button */}
                 <button
-                  onClick={() => toggleTodo(todo.id)}
+                  disabled={isAnimating}
+                  onClick={ () => {
+                    toggleTodo(todo.id);
+                    todo.completed ? null: reward();
+                  }}
                   className="flex-shrink-0"
                 >
-                  {todo.completed ? (
-                    <Check className="text-green-600" size={24} />
+                  {todo.completed ? <span id="rewardId" /> : null} {todo.completed ? (
+                    <Check className="text-green-600" size={24}/> 
                   ) : (
-                    <Circle className="text-gray-400 hover:scale-90" size={24} />
-                  )}
+                    
+                    <Circle className="text-gray-400 hover:scale-90" size={24}/>
+                  )} 
                 </button>
 
                 {/* Todo text with conditional styling */}
