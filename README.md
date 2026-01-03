@@ -1,6 +1,6 @@
 # About
 
-IC, I Do is a personalized, Notion-inspired to-do list program. 
+IC, I Do is a personalized, Notion-inspired to-do list.
 
 Features:
 - Adding, editing, completing, and deleting to-do list items
@@ -10,14 +10,14 @@ Features:
 - Notes page
 - Light + Dark mode
 - Confetti!
+- Date on notes section
 
 To Do: (😉)
+- Pinned items show up in Notes section
 - Text formatting (bold, italic, etc)
 - Subtasks / nested to-do items
 - Stats page (# completed, etc) like the GitHub contributions or Leetcode progress page
-- Auto-pin for soon-to-be due or overdue items
 - Polish, make actual URL instead of localhost
-
 
 
 # React + Vite
