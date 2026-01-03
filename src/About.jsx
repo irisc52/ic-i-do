@@ -54,18 +54,18 @@ export default function About( {goToPage , theme , setTheme} ) {
                         <p>
                             <b>ic, i do</b> was created by
                             <a href="https://www.linkedin.com/in/iristtchen/"> <span className="text-blue-500"><u>Iris Chen</u> </span></a>
-                            (me!) when i concluded halfway through my sophomore year of college that using a single google doc for all
-                            my organizational purposes was not very efficient (or fun).
+                            (me!) when i finally decided halfway through my sophomore year of college that using a single google doc for all
+                            my organizational purposes was not very efficient (or fun). 
                             <br></br><br></br>
-                            more about me: i'm a student at carnegie mellon studying statistics, ml, and cs. i'm interested in the intersection
-                            of those fields and the problems solved there. i built this app to reflect my belief that our organizational
-                            tools should represent how we actually think and motivate us - not force us into rigid systems.
+                            more about me: i'm a student at carnegie mellon learning about statistics and various areas of computer science
+                            and growing (a lot) as a person. i'm interested in where data, ML, and CS intersect and the problems solved there. 
+                            this site reflects my belief that tools should represent how we actually think and motivate us.  
                             <br></br><br></br>
-                            what started as a way to learn more about React and frontend development has grown into a personal
-                            productivity hub that i know all of the ins and outs of. it's inspired by Notion but stripped down to 
-                            the elements that matter most to me. 
+                            what started as a way to learn more about React and frontend development has since grown into a personal
+                            productivity system that i get to know <i>all</i> the ins and outs of. it's inspired by Notion, stripped down to 
+                            the elements that matter most to me, and customized in a way that speaks to my work style.
                             <br></br><br></br>
-                            i'm always working to maximize my ability to solve interesting and challenging problems with interesting
+                            i'm always working to maximize my ability to solve challenging problems with interesting
                             tools. if you have thoughts, suggestions, or just want to say hi, feel free to reach me 
                             via email at irischen@andrew.cmu.edu!
                         </p>

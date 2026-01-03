@@ -31,7 +31,7 @@ export default function TodoApp( {goToPage , theme , setTheme } ) {
         buttonCurrent: "bg-blue-200",
         buttonCurrentText: "text-black",
 
-        blockColor: "bg-gray-500",
+        blockColor: "bg-gray-700",
         
         textArea: "bg-gray-600",
         textAreaOutline: "border-gray-700"
@@ -53,7 +53,7 @@ export default function TodoApp( {goToPage , theme , setTheme } ) {
   });
   const [newTodoText, setNewTodoText] = useState('');
   const [newTodoCategory, setNewTodoCategory] = useState('personal🧘🏻‍♀️');
-  const [filter, setFilter] = useState('active'); // 'all', 'active', 'completed', 'pinned (active)'
+  const [filter, setFilter] = useState('all 🗃️'); // 'all', 'active', 'completed', 'pinned (active)'
 
   const [editingId, setEditingId] = useState(null);
   const [editingText, setEditingText] = useState('');
@@ -125,16 +125,25 @@ export default function TodoApp( {goToPage , theme , setTheme } ) {
   // COMPUTED VALUES
   // Derive data from state (like computed properties)
   const filteredTodos = todos.filter(todo => {
-    if (filter === 'active') return !todo.completed;
-    if (filter === 'completed') return todo.completed;
+    if (filter === 'active ‼️') return !todo.completed;
+    if (filter === 'archive 🗂️') return todo.completed;
+    if (filter == 'action 📍') return todo.pinned && !todo.completed;
     return true; // 'all'
   });
 
-  const sortedFilteredTodos = [...filteredTodos].sort((a, b) => {
+  const sortedPinnedFilteredTodos = [...filteredTodos].sort((a, b) => {
     if (!a.pinned) return 1;
     if (!b.pinned) return -1;
     return 0;
   })
+
+  const sortedFilteredTodos = [...sortedPinnedFilteredTodos].sort((a, b) => {
+    if (a.completed) return 1;
+    if (b.completed) return -1;
+    return 0;
+  })
+
+
 
   const categories = [...new Set(todos.map(todo => todo.category))];
   const stats = {
@@ -173,7 +182,7 @@ export default function TodoApp( {goToPage , theme , setTheme } ) {
 
         {/* Add Todo Section */}
         <div className={`${t.blockColor} rounded-lg shadow-lg p-6 mb-6`}>
-          <h2 className={`text-lg font-semibold ${t.text} mb-4`}>add new task</h2>
+          <h2 className={`text-lg font-semibold ${t.text} mb-4`}>add new task ✍🏼</h2>
           <div className="flex gap-3">
             {/* INPUT: value links to state, onChange updates state */}
             <input
@@ -215,7 +224,7 @@ export default function TodoApp( {goToPage , theme , setTheme } ) {
         {/* Filter Tabs */}
         <div className={`${t.blockColor} rounded-lg shadow-lg p-4 mb-6`}>
           <div className="flex gap-2">
-            {['active', 'all', 'completed'].map(filterType => (
+            {['all 🗃️', 'active ‼️', 'archive 🗂️', 'action 📍'].map(filterType => (
               <button
                 key={filterType}
                 onClick={() => setFilter(filterType)}
@@ -235,7 +244,7 @@ export default function TodoApp( {goToPage , theme , setTheme } ) {
         <div className="space-y-3">
           {filteredTodos.length === 0 ? (
             <div className={`${t.blockColor} rounded-lg shadow-lg p-8 text-center text-gray-500`}>
-              lock in bruh
+              :)
             </div>
           ) : (
             // MAP: Iterate over array and return JSX for each item
@@ -249,8 +258,9 @@ export default function TodoApp( {goToPage , theme , setTheme } ) {
                 <button
                   disabled={isAnimating}
                   onClick={ () => {
-                    toggleTodo(todo.id);
                     todo.completed ? null: reward();
+                    toggleTodo(todo.id);
+                    // todo.completed ? null: reward();
                   }}
                   className="flex-shrink-0"
                 >
@@ -330,24 +340,6 @@ export default function TodoApp( {goToPage , theme , setTheme } ) {
             ))
           )}
         </div>
-
-        {/* Category Summary */}
-        {categories.length > 0 && (
-          <div className={`mt-6 ${t.blockColor} rounded-lg shadow-lg p-6`}>
-            <h3 className={`text-lg font-semibold ${t.text} mb-3`}>by category (active)</h3>
-            <div className="flex flex-wrap gap-3">
-              {categories.map(category => {
-                const count = todos.filter(t => t.category === category && !t.completed).length;
-                return (
-                  <div key={category} className="px-4 py-2 bg-gray-100 rounded-lg">
-                    <span className="font-medium text-gray-700">{category}</span>
-                    <span className="ml-2 text-gray-500">({count})</span>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );

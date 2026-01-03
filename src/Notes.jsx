@@ -65,7 +65,8 @@ export default function Notes({ goToPage , theme , setTheme }) {
                                         (<SunIcon color={t.iconColor}/>) }
                 </button>
             </div>
-            <div className={`min-h-screen p-8 flex justify-center items-center`}> 
+
+            <div className={`min-h-screen p-8 flex justify-center items-center`}>
                 <textarea
                     spellCheck={false}
                     type="textarea"
