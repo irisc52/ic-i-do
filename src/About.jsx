@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { HomeIcon, SunIcon, MoonIcon } from 'lucide-react';
+import meImg from './me.jpeg'
 
 export default function About( {goToPage , theme , setTheme} ) {
 
@@ -51,6 +52,11 @@ export default function About( {goToPage , theme , setTheme} ) {
             </div>
                 <div className={`min-h-screen p-8 flex items-center justify-center`}>
                     <div className={`space-y-8 font-serif ${t.text} max-w-3xl mx-auto text-center`}>
+                        <img
+                            src={meImg}
+                            style={{ height: '300px'}}
+                            className="mx-auto"
+                        />
                         <p>
                             <b>ic, i do</b> was created by
                             <a href="https://www.linkedin.com/in/iristtchen/"> <span className="text-blue-500"><u>Iris Chen</u> </span></a>

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { HomeIcon, MoonIcon, SunIcon } from 'lucide-react';
 
 
-
 export default function Notes({ goToPage , theme , setTheme }) {
 
     const themes = {
@@ -49,6 +48,21 @@ export default function Notes({ goToPage , theme , setTheme }) {
         localStorage.setItem('notes', JSON.stringify(notes));
     }, [notes])
 
+    const months = ["january", "february", "march", "april", 
+        "may", "june", "july", "august", "september", 
+        "october", "november", "december"
+    ];
+    
+    const days = ["sunday", "monday", "tuesday", "wednesday", 
+      "thursday", "friday", "saturday"]
+    
+    const today = new Date();
+    const month = months[today.getMonth()];
+    const weekday = days[today.getDay()];
+    const day = today.getDate();
+    const year = today.getFullYear();
+    const formattedDate = `${weekday}, ${month} ${day}, ${year}`
+
     return (
 
         <div className={`min-h-screen font-serif ${t.bg} p-8`}>
@@ -66,7 +80,12 @@ export default function Notes({ goToPage , theme , setTheme }) {
                 </button>
             </div>
 
-            <div className={`min-h-screen p-8 flex justify-center items-center`}>
+            <div className={`min-h-screen p-8 space-y-4 flex flex-col justify-center items-center`}>
+                <h1 className={`${t.text} text-xl`}>
+                    <b>{formattedDate}</b>
+                </h1>
+
+
                 <textarea
                     spellCheck={false}
                     type="textarea"
@@ -74,7 +93,7 @@ export default function Notes({ goToPage , theme , setTheme }) {
                     onChange={(e) => setNotes(e.target.value)}
                     onKeyPress={(e) => e.key === 'Enter' && setNotes()}
                     placeholder="what are we doing today queen"
-                    className={`flex-1 px-4 py-2 border ${t.textArea} ${t.textAreaOutline} rounded-lg ${t.text} focus:outline-none 
+                    className={`px-4 py-3 border ${t.textArea} ${t.textAreaOutline} rounded-lg ${t.text} focus:outline-none 
                                 focus:ring-2 focus:ring-blue-300 w-full h-96`}
                 />
             </div>
