@@ -12,7 +12,7 @@ const moods = {
 
 }
 
-export default function Welcome({ goToPage , theme , setTheme}) {
+export default function Welcome({ goToPage , theme , setTheme , todoItems , setToDoItems}) {
 
     const themes = {
         light: {
@@ -32,9 +32,9 @@ export default function Welcome({ goToPage , theme , setTheme}) {
             bg: "bg-gray-800",
             iconColor: "white",
             text: "text-blue-50",
-            button: "bg-blue-800",
+            button: "bg-blue-900",
             buttonText: "text-white",
-            buttonHover: "bg-blue-400",
+            buttonHover: "bg-blue-700",
             buttonCurrent: "bg-blue-200",
             buttonCurrentText: "text-black",
             

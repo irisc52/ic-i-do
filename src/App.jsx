@@ -3,7 +3,7 @@ import { Plus, Trash2, Check, Circle, PinIcon, HomeIcon, SunIcon, MoonIcon } fro
 import { useReward } from 'react-rewards';
 
 
-export default function TodoApp( {goToPage , theme , setTheme } ) {
+export default function TodoApp( {goToPage , theme , setTheme , todos, setTodos} ) {
 
   const themes = {
     light: {
@@ -42,15 +42,15 @@ export default function TodoApp( {goToPage , theme , setTheme } ) {
 
   // STATE MANAGEMENT with localStorage
   // Load todos from localStorage on initial render, or use default todos if none exist
-  const [todos, setTodos] = useState(() => {
-    const savedTodos = localStorage.getItem('todos');
-    if (savedTodos) {
-      return JSON.parse(savedTodos);
-    }
-    return [
-      { id: 1, text: 'Test', completed: false, category: 'personal' },
-    ];
-  });
+  // const [todos, setTodos] = useState(() => {
+  //   const savedTodos = localStorage.getItem('todos');
+  //   if (savedTodos) {
+  //     return JSON.parse(savedTodos);
+  //   }
+  //   return [
+  //     { id: 1, text: 'Test', completed: false, category: 'personal' },
+  //   ];
+  // });
   const [newTodoText, setNewTodoText] = useState('');
   const [newTodoCategory, setNewTodoCategory] = useState('personal🧘🏻‍♀️');
   const [filter, setFilter] = useState('all 🗃️'); // 'all', 'active', 'completed', 'pinned (active)'
@@ -64,9 +64,9 @@ export default function TodoApp( {goToPage , theme , setTheme } ) {
 
   // useEffect: Runs side effects after render
   // Saves todos to localStorage whenever the todos array changes
-  useEffect(() => {
-    localStorage.setItem('todos', JSON.stringify(todos));
-  }, [todos]); // Dependency array: only run when 'todos' changes
+  // useEffect(() => {
+  //   localStorage.setItem('todos', JSON.stringify(todos));
+  // }, [todos]); // Dependency array: only run when 'todos' changes
 
   // EVENT HANDLERS
   // Run when user interacts with UI
