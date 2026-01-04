@@ -10,10 +10,9 @@ Features:
 - Notes page
 - Light + Dark mode
 - Confetti!
-- Date on notes section
+- Date on notes section + pinned items show up
 
 To Do: (😉)
-- Pinned items show up in Notes section
 - Text formatting (bold, italic, etc)
 - Subtasks / nested to-do items
 - Stats page (# completed, etc) like the GitHub contributions or Leetcode progress page
