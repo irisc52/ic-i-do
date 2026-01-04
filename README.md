@@ -1,6 +1,6 @@
 # ic, i do
 
-Personalized to-do task tracket + organizational tool. 
+Personalized to-do task tracker + organizational tool. 
 
 Run locally:
 `npm run dev`
