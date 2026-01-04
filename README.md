@@ -1,23 +1,21 @@
-# About
+# ic, i do
 
-IC, I Do is a personalized, Notion-inspired to-do list.
+Personalized to-do task tracker + organizational tool. 
+
+Run locally:
+`npm run dev`
 
 Features:
-- Adding, editing, completing, and deleting to-do list items
+- Adding, editing, pinning, completing, and deleting to-do list items
 - Detailing items with category (school, work, etc) and due date (optional)
-- Pinning and unpinning items based on priority
-- Home screen / welcome page 
-- Notes page
-- Light + Dark mode
-- Confetti!
-- Date on notes section + pinned items show up
+- Home screen / welcome page and notes page with pinned tasks shown
+- Light + Dark mode and confetti!
 
-To Do: (😉)
+TODO:
 - Text formatting (bold, italic, etc)
 - Subtasks / nested to-do items
-- Stats page (# completed, etc) like the GitHub contributions or Leetcode progress page
-- Polish, make actual URL instead of localhost
-
+- Stats page (# completed, "contributions per day", etc)
+- Deploy
 
 # React + Vite
 
