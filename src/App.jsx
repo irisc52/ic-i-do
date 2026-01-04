@@ -1,56 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Trash2, Check, Circle, PinIcon, HomeIcon, SunIcon, MoonIcon } from 'lucide-react';
 import { useReward } from 'react-rewards';
+import { themes } from './Themes.jsx'
 
 
 export default function TodoApp( {goToPage , theme , setTheme , todos, setTodos} ) {
 
-  const themes = {
-    light: {
-        bg: "bg-blue-50",
-        iconColor: "black",
-        text: "text-gray-800",
-        button: "bg-gray-200",
-        buttonText: "text-gray-700",
-        buttonHover: "bg-gray-300",
-        buttonCurrent: "bg-blue-500",
-        buttonCurrentText: "text-white",
-
-        blockColor: "bg-white",
-
-        textArea: "white",
-        textAreaOutline: "border-gray-300"
-    },
-    dark: {
-        bg: "bg-gray-800",
-        iconColor: "white",
-        text: "text-blue-50",
-        button: "bg-blue-800",
-        buttonText: "text-white",
-        buttonHover: "bg-blue-400",
-        buttonCurrent: "bg-blue-200",
-        buttonCurrentText: "text-black",
-
-        blockColor: "bg-gray-700",
-        
-        textArea: "bg-gray-600",
-        textAreaOutline: "border-gray-700"
-    }
-}
-
   const t = themes[theme];
 
-  // STATE MANAGEMENT with localStorage
-  // Load todos from localStorage on initial render, or use default todos if none exist
-  // const [todos, setTodos] = useState(() => {
-  //   const savedTodos = localStorage.getItem('todos');
-  //   if (savedTodos) {
-  //     return JSON.parse(savedTodos);
-  //   }
-  //   return [
-  //     { id: 1, text: 'Test', completed: false, category: 'personal' },
-  //   ];
-  // });
   const [newTodoText, setNewTodoText] = useState('');
   const [newTodoCategory, setNewTodoCategory] = useState('personal🧘🏻‍♀️');
   const [filter, setFilter] = useState('all 🗃️'); // 'all', 'active', 'completed', 'pinned (active)'
@@ -61,12 +18,6 @@ export default function TodoApp( {goToPage , theme , setTheme , todos, setTodos}
   const [newToDoDate, setNewToDoDueDate] = useState('');
 
   const {reward, isAnimating} = useReward('rewardId', 'confetti')
-
-  // useEffect: Runs side effects after render
-  // Saves todos to localStorage whenever the todos array changes
-  // useEffect(() => {
-  //   localStorage.setItem('todos', JSON.stringify(todos));
-  // }, [todos]); // Dependency array: only run when 'todos' changes
 
   // EVENT HANDLERS
   // Run when user interacts with UI
@@ -87,12 +38,11 @@ export default function TodoApp( {goToPage , theme , setTheme , todos, setTodos}
     };
     
     setTodos([...todos, newTodo]); // Spread operator: copies all existing todos
-    setNewTodoText(''); // Clear input field
+    setNewTodoText(''); 
     setNewToDoDueDate('');
   };
 
   const toggleTodo = (id) => {
-    // If the todo matches our ID, flip its completed status
     setTodos(todos.map(todo => {
       if (todo.id === id) {
         const newCompleted = !todo.completed;
@@ -154,7 +104,7 @@ export default function TodoApp( {goToPage , theme , setTheme , todos, setTodos}
 
   // JSX
   return (
-    <div className={`min-h-screen font-serif  ${t.bg} p-8`}>
+    <div className={`min-h-screen font-serif transition-colors duration-500 ease-in-out ${t.bg} p-8`}>
       <div className="flex gap-4">
         <button
           onClick={() => goToPage('welcome')}

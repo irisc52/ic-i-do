@@ -1,37 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { HomeIcon, MoonIcon, SunIcon, Pin, ArrowRight } from 'lucide-react';
+import { themes } from './Themes.jsx'
 
 
 export default function Notes({ goToPage , theme , setTheme , todos}) {
-
-    const themes = {
-        light: {
-            bg: "bg-blue-50",
-            iconColor: "black",
-            text: "text-gray-800",
-            button: "bg-gray-200",
-            buttonText: "text-gray-700",
-            buttonHover: "bg-gray-300",
-            buttonCurrent: "bg-blue-500",
-            buttonCurrentText: "text-white",
-
-            textArea: "bg-white",
-            textAreaOutline: "border-gray-300"
-        },
-        dark: {
-            bg: "bg-gray-800",
-            iconColor: "white",
-            text: "text-blue-50",
-            button: "bg-blue-800",
-            buttonText: "text-white",
-            buttonHover: "bg-blue-400",
-            buttonCurrent: "bg-blue-200",
-            buttonCurrentText: "text-black",
-            
-            textArea: "bg-gray-600",
-            textAreaOutline: "border-gray-700"
-        }
-    }
 
     const t = themes[theme];
 
@@ -68,7 +40,7 @@ export default function Notes({ goToPage , theme , setTheme , todos}) {
 
     return (
 
-        <div className={`min-h-screen font-serif ${t.bg} p-8`}>
+        <div className={`transition-colors duration-500 ease-in-out min-h-screen font-serif ${t.bg} p-8`}>
             <div className="flex gap-4">
                 <button
                     onClick={() => goToPage('welcome')}
@@ -84,7 +56,7 @@ export default function Notes({ goToPage , theme , setTheme , todos}) {
             </div>
 
             <div className={`min-h-screen p-8 space-y-4 flex flex-col justify-center items-center`}>
-                <h1 className={`${t.text} text-xl`}>
+                <h1 className={`${t.text} text-3xl`}>
                     <b>{formattedDate}</b>
                 </h1>
 
@@ -113,7 +85,7 @@ export default function Notes({ goToPage , theme , setTheme , todos}) {
                                 key={todo.id}
                                 className="flex space-x-3"
                             >
-                                <ArrowRight /> {todo.text} <p className="text-xs">({todo.dueDate && todo.dueDate})</p>
+                                <ArrowRight /> {todo.text} 
                             </div>
                         ))}
                     </div>

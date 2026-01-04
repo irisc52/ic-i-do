@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { MoonIcon, SunIcon, NotebookTextIcon, PencilIcon, CircleQuestionMark} from 'lucide-react';
 import { Typewriter } from 'react-simple-typewriter';
+import { themes } from './Themes.jsx'
 
 const moods = {
     normal: {
@@ -12,36 +13,7 @@ const moods = {
 
 }
 
-export default function Welcome({ goToPage , theme , setTheme , todoItems , setToDoItems}) {
-
-    const themes = {
-        light: {
-            bg: "bg-blue-50",
-            iconColor: "black",
-            text: "text-gray-800",
-            button: "bg-gray-200",
-            buttonText: "text-gray-700",
-            buttonHover: "bg-gray-300",
-            buttonCurrent: "bg-blue-500",
-            buttonCurrentText: "text-white",
-
-            textArea: "white",
-            textAreaOutline: "border-gray-300"
-        },
-        dark: {
-            bg: "bg-gray-800",
-            iconColor: "white",
-            text: "text-blue-50",
-            button: "bg-blue-900",
-            buttonText: "text-white",
-            buttonHover: "bg-blue-700",
-            buttonCurrent: "bg-blue-200",
-            buttonCurrentText: "text-black",
-            
-            textArea: "bg-gray-600",
-            textAreaOutline: "border-gray-700"
-        }
-    }
+export default function Welcome({ goToPage , theme , setTheme }) {
 
     const [selectedPage, setSelectedPage] = useState('')
     // const [theme, setTheme] = useState('light')
@@ -68,7 +40,7 @@ export default function Welcome({ goToPage , theme , setTheme , todoItems , setT
     ]
 
     return (
-    <div className={`min-h-screen ${t.bg } p-8 flex items-center justify-center`}>
+    <div className={`transition-colors duration-500 ease-in-out min-h-screen ${t.bg } p-8 flex items-center justify-center`}>
         <div className="space-y-8 max-w-3xl mx-auto text-center">
             <button
                 onClick = {() => setTheme(theme === 'light' ? 'dark' : 'light')}
