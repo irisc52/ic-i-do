@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Trash2, Check, Circle, PinIcon, HomeIcon, SunIcon, MoonIcon } from 'lucide-react';
+"use client";
 import { useReward } from 'react-rewards';
 import { themes } from './Themes.jsx'
 
