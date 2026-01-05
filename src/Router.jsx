@@ -14,7 +14,7 @@ export default function Main() {
             return JSON.parse(savedTodos);
         }
         return [
-            { id: 1, text: 'Test', completed: false, category: 'personal' },
+            { id: 1, text: 'example task', completed: false, category: 'personal🧘🏻‍♀️' },
         ];
     });
     
