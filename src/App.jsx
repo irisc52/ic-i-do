@@ -100,7 +100,7 @@ export default function TodoApp( {goToPage , theme , setTheme , todos, setTodos}
   // JSX
   return (
     <div className={`${t.bg}`}>
-      <div className={`animate-fadeIn min-h-screen font-serif transition-colors duration-500 ease-in-out p-8`}>
+      <div className={`${t.bg} animate-fadeIn min-h-screen font-serif transition-colors duration-500 ease-in-out p-8`}>
         <div className="flex gap-4">
           <button
             onClick={() => goToPage('welcome')}

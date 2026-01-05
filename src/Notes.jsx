@@ -40,7 +40,7 @@ export default function Notes({ goToPage , theme , setTheme , todos}) {
 
     return (
         <div className={`${t.bg}`}>
-            <div className={`animate-fadeIn transition-colors duration-500 ease-in-out min-h-screen font-serif p-8`}>
+            <div className={`${t.bg} animate-fadeIn transition-colors duration-500 ease-in-out min-h-screen font-serif p-8`}>
                 <div className="flex gap-4">
                     <button
                         onClick={() => goToPage('welcome')}
@@ -69,7 +69,7 @@ export default function Notes({ goToPage , theme , setTheme , todos}) {
                             value={notes}
                             onChange={(e) => setNotes(e.target.value)}
                             onKeyPress={(e) => e.key === 'Enter' && setNotes()}
-                            placeholder="what are we doing today queen"
+                            placeholder="what's on today's agenda!"
                             className={`px-4 py-3 border ${t.textArea} ${t.textAreaOutline} rounded-lg ${t.text} focus:outline-none 
                                         focus:ring-2 focus:ring-blue-300 w-3/4 h-96`}
                         />
