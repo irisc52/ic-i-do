@@ -10,12 +10,11 @@ Features:
 - Detailing items with category (school, work, etc) and due date (optional)
 - Home screen / welcome page and notes page with pinned tasks shown
 - Light + Dark mode and confetti!
+- Subtasks / nested items
 
 TODO:
-- Text formatting (bold, italic, etc)
-- Subtasks / nested to-do items
 - Stats page (# completed, "contributions per day", etc)
-- Deploy
+- Backend
 
 # React + Vite
 
