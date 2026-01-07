@@ -26,7 +26,7 @@ export default function Main() {
         welcome: <WelcomePage goToPage={setCurrentScreen} theme={theme} setTheme={setTheme}/>,
         app: <App goToPage={setCurrentScreen} theme={theme} setTheme={setTheme} todos={todos} setTodos={setTodos}/>,
         about: <AboutPage goToPage={setCurrentScreen} theme={theme} setTheme={setTheme}/>,
-        notes: <NotesPage goToPage={setCurrentScreen} theme={theme} setTheme={setTheme} todos={todos}/>
+        notes: <NotesPage goToPage={setCurrentScreen} theme={theme} setTheme={setTheme} todos={todos} setTodos={setTodos}/>
     };
     return <div>{pages[currentScreen]}</div>;
 }
