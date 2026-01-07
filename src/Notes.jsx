@@ -147,7 +147,7 @@ export default function Notes({ goToPage , theme , setTheme , todos, setTodos}) 
                         />
 
                         <div className={`px-4 py-3 mb-4 border ${t.textArea} ${t.textAreaOutline} rounded-lg ${t.text} focus:outline-none 
-                                        focus:ring-2 focus:ring-blue-300 w-1/4 h-96`} >
+                                        focus:ring-2 focus:ring-blue-300 w-1/4 h-96 overflow-scroll`} >
                             <div className="text-center">
                                 <b>pinned tasks 📍</b>
                             </div>
